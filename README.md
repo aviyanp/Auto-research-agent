@@ -14,9 +14,13 @@ The app also supports **Daytona and Agent37** for private cloud Codex sandboxes.
 
 ## Download
 
-[Download for macOS — Apple Silicon (.dmg)](https://github.com/rohanarun/Auto-research-agent/releases/download/v1.5.0/Auto-research-agent-1.5.0-arm64.dmg) · [SHA-256 checksum](https://github.com/rohanarun/Auto-research-agent/releases/download/v1.5.0/Auto-research-agent-1.5.0-arm64.dmg.sha256)
+**Universal macOS build (Apple Silicon + Intel):** [Download DMG](https://github.com/aviyanp/Auto-research-agent/releases/download/v1.5.0-universal/Auto-research-agent-1.5.0-universal.dmg) · [ZIP](https://github.com/aviyanp/Auto-research-agent/releases/download/v1.5.0-universal/Auto-research-agent-1.5.0-universal.zip) · [SHA-256 checksums](https://github.com/aviyanp/Auto-research-agent/releases/download/v1.5.0-universal/SHA256SUMS)
 
-Requires macOS 14 or newer. The app and disk image are Developer ID signed and Apple notarized. Open the DMG, drag **Auto Research** into Applications, and launch it. On first launch, choose a folder on a mounted external drive for research files, then connect your installed Codex, Claude Code, OpenCode or Antigravity CLI in **Connections & settings**. Version 1.5.0 includes both Antigravity and Agent37 support. The download contains no account credentials or local chats.
+Requires **macOS 14 or newer**. This fork's universal build is **ad-hoc signed and not Apple notarized**. If macOS blocks it, open **System Settings → Privacy & Security → Open Anyway** after verifying the source. Drag **Auto Research** into Applications. On first launch, choose a mounted external-drive folder for research files, then connect your installed Codex, Claude Code, OpenCode or Antigravity CLI in **Connections & settings**. The build contains no account credentials or local chats.
+
+For the upstream **Apple Silicon-only, Developer ID-signed and notarized** release, see [v1.5.0 from rohanarun](https://github.com/rohanarun/Auto-research-agent/releases/tag/v1.5.0).
+
+The [one-time universal release workflow](.github/workflows/macos-universal-release.yml) builds arm64 and x86_64 slices, combines and verifies them, and publishes the DMG, ZIP and checksums. It runs automatically only when the workflow file is added or changed on `main`, and can be dispatched manually for a rebuild.
 
 ## Auto-research benchmark
 
