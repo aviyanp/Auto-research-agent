@@ -1,0 +1,56 @@
+name: One-time macOS universal release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/macos-universal-release.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: autoresearch-universal-v1.5.0
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.repository == 'aviyanp/Auto-research-agent'
+    runs-on: macos-15
+    timeout-minutes: 90
+    steps:
+      - name: Checkout release source
+        uses: actions/checkout@v4
+
+      - name: Check Swift and Xcode
+        run: |
+          swift --version
+          xcodebuild -version
+
+      - name: Build universal app and distributables
+        run: bash scripts/build_universal_release.sh
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="v1.5.0-universal"
+          dist="$RUNNER_TEMP/autoresearch-universal/dist"
+          files=(
+            "$dist/Auto-research-agent-1.5.0-universal.dmg"
+            "$dist/Auto-research-agent-1.5.0-universal.zip"
+            "$dist/SHA256SUMS"
+          )
+          for f in "${files[@]}"; do test -s "$f"; done
+          (cd "$dist" && shasum -a 256 -c SHA256SUMS)
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "${files[@]}" --clobber
+          else
+            gh release create "$tag" "${files[@]}" \
+              --target "$GITHUB_SHA" \
+              --title "Auto Research v1.5.0 — macOS Universal" \
+              --notes-file "$dist/release-notes.md"
+          fi
+          gh release view "$tag" --json url --jq .url
