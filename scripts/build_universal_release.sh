@@ -49,9 +49,10 @@ for name in ResearchPolicy.md ContinuePolicy.md CatalogPolicy.json BuiltinProjec
   Agent37Defaults.json DaytonaDefaults.json DaytonaWorker.py \
   MethodTelemetry.py CloudResumeProbe.py IndependentAgentPolicy.md \
   ResearchMethodsDefaults.json ResearchMethodsPolicy.md ResearchMethods.py \
-  Info.plist AppIcon.icns; do
+  AppIcon.icns; do
   cp "$PROJECT_ROOT/Resources/$name" "$RESOURCES/$name"
 done
+cp "$PROJECT_ROOT/Resources/Info.plist" "$APP/Contents/Info.plist"
 cp "$PROJECT_ROOT/Resources/Defaults.example.json" "$RESOURCES/Defaults.json"
 cp "$PROJECT_ROOT/LICENSE" "$RESOURCES/LICENSE"
 cp -R "$PROJECT_ROOT/Resources/StarterPrompts" "$RESOURCES/StarterPrompts"
